@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "MyString.h"
 
 CMyString::CMyString() : m_pszData(NULL), m_nLength(0){}
