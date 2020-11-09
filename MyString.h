@@ -23,4 +23,6 @@ public:
     CMyString& operator=(const CMyString &rhs);
     CMyString operator+(const CMyString &rhs);
     CMyString& operator+=(const CMyString &rhs);
+    char operator[](int nIndex) const;
+    char& operator[](int nIndex);
 };
