@@ -119,4 +119,12 @@ int CMyString::operator!=(const CMyString &rhs)
     return 1;
 }
 
+CMyString operator+(const char *pszParam, const CMyString &strParam)
+{
+    CMyString strResult(pszParam);
+    strResult.Append(strParam.m_pszData);
+    
+    return strResult;
+}
+
 void CMyString::OnSetString(char* pszData, int nLength) {}

@@ -29,4 +29,5 @@ public:
     int operator!=(const CMyString &rhs);
     
     virtual void OnSetString(char* pszData, int nLength);
+    friend CMyString operator+(const char *pzParam, const CMyString &strPara);
 };
