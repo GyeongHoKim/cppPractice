@@ -27,4 +27,6 @@ public:
     char& operator[](int nIndex);
     int operator==(const CMyString &rhs);
     int operator!=(const CMyString &rhs);
+    
+    virtual void OnSetString(char* pszData, int nLength);
 };

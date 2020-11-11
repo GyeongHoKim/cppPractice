@@ -33,6 +33,8 @@ int CMyString::SetString(const char* pszParam)
     strcpy_s(m_pszData, sizeof(char) * (nLength + 1), pszParam);
     m_nLength = nLength;
 
+    OnSetString(m_pszData, m_nLength);
+    
     return nLength;
 }
 
@@ -116,3 +118,5 @@ int CMyString::operator!=(const CMyString &rhs)
     
     return 1;
 }
+
+void CMyString::OnSetString(char* pszData, int nLength) {}
