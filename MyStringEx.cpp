@@ -5,6 +5,8 @@
 CMyStringEx::CMyStrinEx() {}
 CMyStringEx::~CMyStringEx() {}
 
+CMyStringEx::CMyStringEx(const char* pszParam) : CMyString(const char* pszParam){};
+
 int CMyStringEx::Find(const char* pszParam)
 {
     if(pszParam == NULL || GetString() == NULL)
