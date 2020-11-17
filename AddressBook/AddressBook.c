@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <conio.h>
+#include <curses.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -42,7 +42,7 @@ USERDATA *FindNode(char *pszName)
 //////////////////////
 int AddNewNode(char *pszName, char *pszPhone)
 {
-    USERDATA *pNewUer = NULL;
+    USERDATA *pNewUser = NULL;
     
     //같은 이름이 이미 존재하는지 확인
     if(FindNode(pszName) != NULL)
@@ -97,7 +97,7 @@ void Search()
     
     pNode = FindNode(szName);
     if(pNode != NULL) {
-        printf"[%p] %s\t%s [%p]\n",
+        printf("[%p] %s\t%s [%p]\n",
             pNode,
             pNode->szName, pNode->szPhone,
             pNode->pNext);
@@ -138,7 +138,7 @@ int RemoveNode(char *pszName)
         pDelete = pPrevNode->pNext;
         
         if(strcmp(pDelete->szName, pszName) == 0) {
-            pPrevNode->pNext = pDelete->Next;
+            pPrevNode->pNext = pDelete->pNext;
             free(pDelete);
             
             return 1;
@@ -165,3 +165,111 @@ void Remove()
 
 /////////////////////
 //메뉴를 출력하는 UI
+int PrintUI()
+{
+    int nInput = 0;
+
+    system("cls");
+    printf("[1] Add\t [2] Search\t [3] Print\t [4] Remove\t [0] Exit\n:");
+
+    // 사용자가 선택한 메뉴의 값을 반환한다.
+    scanf_s("%d", &nInput);
+
+    return nInput;
+}
+
+/////////////////////
+// 데이터 파일에서 노드들을 읽어와 리스트를 완성하는 함수
+int LoadList(char *pszFileName)
+{
+    FILE *fp = NULL;
+    USERDATA user = {0};
+
+    fopen_s(&fp, pszFileName, "rb");
+
+    if(fp == NULL)
+        return 0;
+
+    ReleaseList();
+
+    while(fread(&user, sizeof(USERDATA), 1, fp))
+        AddNewNode(user.szName, user.szPhone);
+
+    fclose(fp);
+
+    return 0;
+}
+
+/////////////////////
+// 리스트 형태로 존재하는 정보를 파일에 저장하는 함수
+int SaveList(char *pszFileName)
+{
+    FILE *fp = NULL;
+    USERDATA *pTmp = g_Head.pNext;
+
+    fopen_s(&fp, pszFileName, "wb");
+
+    if(fp == NULL) {
+        puts("ERROR: 리스트 파일을 쓰기 모드로 열지 못했습니다");
+        _getch();
+
+        return 0;
+    }
+
+    while(pTmp != NULL) {
+        if(fwrite(pTmp, sizeof(USERDATA), 1, fp) != 1)
+            printf("ERROR: %s에 대한 정보를 저장하는 데 실패했습니다.\n", pTmp->szName);
+
+        pTmp = pTmp->pNext;
+    }
+
+    fclose(fp);
+
+    return 1;
+}
+
+////////////////////////////
+// 리스트의 모든 데이터를 삭제하는 함수
+void ReleaseList()
+{
+    USERDATA *pTmp = g_Head.pNext;
+    USERDATA *pDelete = NULL;
+
+    while(pTmp != NULL) {
+        pDelete = pTmp;
+        pTmp = pTmp->pNext;
+
+        free(pDelete);
+    }
+
+    memset(&g_Head, 0, sizeof(USERDATA));
+}
+
+/////////////////////////////
+void main()
+{
+    int nMenu = 0;
+    LoadList(DATA_FILE_NAME);
+
+    // main event loop
+    while(nMenu = PrintUI()) != 0) {
+        switch(nMenu) {
+        case 1:
+            Add();
+            break;
+        case 1:
+            Search();
+            break;
+        case 1:
+            PrintAll();
+            break;
+        case 1:
+            Remove();
+            break;
+        }
+    }
+
+    //종료 전에 파일로 저장하고 메모리를 해제한다.
+    SaveList(DATA_FILE_NAME);
+    ReleaseList();
+}
