@@ -8,22 +8,25 @@ class String
 public:
 	String(const char *str)
 	{
-		if(mystring == nullptr) {
-			mystring = new char[strlen(str)];
-			strncpy(mystring,str,strlen(str));
-			len = strlen(str);
-		}
-		else {
-			if(len < strlen(str)) {
-				delete[] mystring;
-				len = strlen(str);
-				mystring = new char[len];
-			}
-		}
+		mystring = new char[strlen(str)];
+		strncpy(mystring,str,strlen(str));
+		len = strlen(str);
 	}
 	~String()
 	{
 		delete[] mystring;
+	}
+	
+	String& operator=(const char *str)
+	{
+		if(len < strlen(str)) {
+			delete[] mystring;
+			mystring = new char[strlen(str)];
+		}
+		len = strlen(str);
+		strncpy(mystring,str,len);
+		
+		return *this;
 	}
 	
 	operator char*() const
@@ -37,10 +40,18 @@ private:
 
 int main()
 {
+	/*
 	String s("Hello!");
 	const char* sz = s;
 	
 	cout << s << endl;
+	*/
+	const char* sz = "Hello!";
+	String s("Hi~!");
+	cout << "s: " << s << endl;
+	
+	s = sz;
+	cout << "s: " << s << endl;
 	
 	return 0;
 }
