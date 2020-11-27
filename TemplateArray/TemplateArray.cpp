@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 template<typename T>
@@ -79,7 +80,7 @@ int main(int argc, char* argv[])
     arr[4] = 50;
     
     for(int i = 0; i < 5; ++i)
-        cout << arr2[i];
+        cout << arr[i];
         
     cout << endl;
     
