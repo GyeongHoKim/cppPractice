@@ -1,9 +1,9 @@
 #include <iostream>
-include <string>
+#include <string>
 using namespace std;
 
 template<typename IterT, typename Func>
-void For_each(IterT bein, IterT end, Func pf)
+void For_each(IterT begin, IterT end, Func pf)
 {
     while(begin != end)
         pf(*begin++);
