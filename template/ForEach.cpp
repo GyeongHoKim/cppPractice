@@ -15,7 +15,7 @@ void PrintInt(int n)
 int main()
 {
     int arr[5] = {10, 20, 30, 40, 50};
-    For_eah(arr, arr+5, PrintInt);
+    For_each(arr, arr+5, PrintInt);
     cout << endl;
     
     return 0;
