@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-void for_each(int *begin, int *end, void (*pf)(int))
+void For_each(int *begin, int *end, void (*pf)(int))
 {
     while(begin != end)
         pf(*begin++);
