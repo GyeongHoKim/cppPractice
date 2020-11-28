@@ -13,7 +13,7 @@ int main()
     v.push_back(50);
     
     vector<int>::iterator normal_iter = v.begin() + 3;
-    vecotr<int>::reverse_iterator reverse_iter(normal_iter);
+    vector<int>::reverse_iterator reverse_iter(normal_iter);
     
     cout << "normal iter value: " << *normal_iter << endl;
     cout << "reverse iter value: " << *reverse_iter << endl;
