@@ -35,14 +35,16 @@ public:
 		return n;
 	}
 	
+    
 	void insert(const T& value)
 	{
 		node_ptr newNode = new node {new T(value), NULL, NULL};
 		++n;
 		if (head->data == NULL) {
-			head->data = newNode->data;
-			delete newNode;
-			return;
+            newNode->next = head;
+            newNode->prev = head;
+            head->next = newNode;
+            head->prev = newNode;
 		}
 		else {
 			newNode->next = head;
@@ -50,6 +52,7 @@ public:
 			head->prev->next = newNode;
 			head->prev = newNode;
 		}
+        head = newNode;
 	}
 	
 	/*
@@ -116,7 +119,7 @@ public:
 			return ptr;
 		}
 		
-		cir_list_it& operator+()
+		cir_list_it& operator++()
 		{
 			ptr = ptr->next;
 			return *this;
@@ -230,4 +233,6 @@ int main()
 	pl2.insert(3);
 	std::cout << "Second Play list: ";
 	pl2.loopOnce();
+
+    return 0;
 }
